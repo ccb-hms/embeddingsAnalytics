@@ -8,7 +8,7 @@ library(scDiagnostics)
 # ___________________
 
 # Read in data
-full_data <- read.csv("bge-small-en-v1.5_embedding.csv")
+full_data <- read.csv("data/bge-small-en-v1.5_embedding.csv")
 
 # Format corpus embeddings
 corpus_embeddings <- matrix(NA, nrow = nrow(full_data), ncol = 384)
@@ -76,22 +76,22 @@ corpus_experiment <- corpus_experiment[, which(corpus_experiment$file_name %in% 
 questions_experiment <- questions_experiment[, which(questions_experiment$file_name %in% file_names)] 
 
 # Generate the MDS scatter plot with cell type coloring
-mds_plot <- visualizeCellTypeMDS(query_data = questions_experiment, 
-                             reference_data = corpus_experiment, 
-                             cell_types = file_names,
-                             query_cell_type_col = "file_name", 
-                             ref_cell_type_col = "file_name")
+mds_plot <- plotCellTypeMDS(query_data = questions_experiment, 
+                            reference_data = corpus_experiment, 
+                            cell_types = file_names,
+                            query_cell_type_col = "file_name", 
+                            ref_cell_type_col = "file_name")
 print(mds_plot)
 
 # Plot the PC data
 corpus_experiment <- runPCA(corpus_experiment)
 questions_experiment <- runPCA(questions_experiment)
-pc_plot <- visualizeCellTypePCA(query_data = questions_experiment, 
-                                reference_data = corpus_experiment,
-                                cell_types = file_names,
-                                query_cell_type_col = "file_name", 
-                                ref_cell_type_col = "file_name", 
-                                pc_subset = c(1:5))
+pc_plot <- plotCellTypePCA(query_data = questions_experiment, 
+                           reference_data = corpus_experiment,
+                           cell_types = file_names,
+                           query_cell_type_col = "file_name", 
+                           ref_cell_type_col = "file_name", 
+                           pc_subset = c(1:10))
 print(pc_plot)
 
 # Plot discriminant space
